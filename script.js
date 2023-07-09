@@ -4,6 +4,9 @@
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 const navLinks = document.querySelector('.nav__links');
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
 
 ///////////////////////////////////////
 // Modal window
@@ -53,4 +56,26 @@ navLinks.addEventListener('click' , function(e) {
     const id = e.target.getAttribute('href')
     document.querySelector(id).scrollIntoView({behavior: 'smooth'})
   }
+})
+
+// Tabbed component
+
+tabsContainer.addEventListener('click', function(e) {
+  
+  // Restore all buttons to default position
+  tabs.forEach(function(tab) {
+    return tab.classList.remove('operations__tab--active');
+  })
+
+  // Make the target button active
+  e.target.closest('.operations__tab').classList.add('operations__tab--active');
+
+  // Hide all inactive contents
+  tabsContent.forEach(function(c) {
+    return c.classList.remove('operations__content--active')
+  })
+
+  // Make active content visible
+  const data = e.target.closest('.operations__tab').dataset.tab;
+  const activeContent = document.querySelector(`.operations__content--${data}`).classList.add('operations__content--active')
 })
