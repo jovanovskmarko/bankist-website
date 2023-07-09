@@ -7,6 +7,7 @@ const navLinks = document.querySelector('.nav__links');
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
+const nav = document.querySelector('.nav');
 
 ///////////////////////////////////////
 // Modal window
@@ -67,15 +68,43 @@ tabsContainer.addEventListener('click', function(e) {
     return tab.classList.remove('operations__tab--active');
   })
 
+  // Return if null
+  const clicked = e.target.closest('.operations__tab');
+  if(!clicked) return;  
+
   // Make the target button active
-  e.target.closest('.operations__tab').classList.add('operations__tab--active');
+  clicked.classList.add('operations__tab--active');
 
   // Hide all inactive contents
   tabsContent.forEach(function(c) {
     return c.classList.remove('operations__content--active')
   })
 
+
+
   // Make active content visible
   const data = e.target.closest('.operations__tab').dataset.tab;
   const activeContent = document.querySelector(`.operations__content--${data}`).classList.add('operations__content--active')
 })
+
+// Menu fade animation
+const handleHover = function(e) {
+  if(e.target.classList.contains('nav__link')) {
+    const link = e.target;
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+    const logo = link.closest('.nav').querySelector('img');
+    
+    siblings.forEach(s => {
+      if (s !== link)
+        s.style.opacity = this
+      }
+    )
+
+    logo.style.opacity = this;
+  }
+
+}
+
+nav.addEventListener('mouseover', handleHover.bind(0.5))
+
+nav.addEventListener('mouseout', handleHover.bind(1))
