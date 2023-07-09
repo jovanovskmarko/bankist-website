@@ -1,5 +1,10 @@
 'use strict';
 
+// Selections
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+const navLinks = document.querySelector('.nav__links');
+
 ///////////////////////////////////////
 // Modal window
 
@@ -32,11 +37,20 @@ document.addEventListener('keydown', function (e) {
 });
 
 //////////////////////////////////////////
-// Scrolling
-
-const btnScrollTo = document.querySelector('.btn--scroll-to');
-const section1 = document.querySelector('#section--1');
+// Button Scrolling
 
 btnScrollTo.addEventListener('click', function() {
   section1.scrollIntoView({behavior: 'smooth'});
+})
+
+//////////////////////////////////////////
+// Page navigation
+
+navLinks.addEventListener('click' , function(e) {
+  e.preventDefault();
+  
+  if(e.target.classList.contains('nav__link')){
+    const id = e.target.getAttribute('href')
+    document.querySelector(id).scrollIntoView({behavior: 'smooth'})
+  }
 })
