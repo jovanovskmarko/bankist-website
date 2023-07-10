@@ -10,6 +10,7 @@ const tabsContent = document.querySelectorAll('.operations__content');
 const nav = document.querySelector('.nav');
 const header = document.querySelector('header');
 const sections = document.querySelectorAll('.section');
+const imgTargets = document.querySelectorAll('img[data-src]')
 
 ///////////////////////////////////////
 // Modal window
@@ -145,3 +146,28 @@ sections.forEach(function(section) {
   sectionObserver.observe(section);
   section.classList.add('section--hidden');
 })
+
+// Lazy loading images
+
+const imgObserverOptions = {
+  root: null,
+  threshold: 0,
+  rootMargin: '-200px'
+}
+
+const loadImages = function(entries) {
+  const [entry] = entries;
+
+  if(!entry.isIntersecting) return;
+
+  entry.target.src = entry.target.dataset.src;
+
+  entry.target.addEventListener('load', function(e) {
+    entry.target.classList.remove('lazy-img');
+  })
+  imgObserver.unobserve(entry.target);
+}
+
+const imgObserver = new IntersectionObserver(loadImages, imgObserverOptions)
+
+imgTargets.forEach(img => imgObserver.observe(img));
