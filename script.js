@@ -9,6 +9,7 @@ const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
 const nav = document.querySelector('.nav');
 const header = document.querySelector('header');
+const sections = document.querySelectorAll('.section');
 
 ///////////////////////////////////////
 // Modal window
@@ -110,6 +111,7 @@ nav.addEventListener('mouseover', handleHover.bind(0.5))
 nav.addEventListener('mouseout', handleHover.bind(1))
 
 // Sticky navigation
+
 const obsOptions = {
   root: null,
   threshold: 0,
@@ -120,10 +122,26 @@ const obsCallback = function(entries) {
   const [entry] = entries
 
   if(!entry.isIntersecting)
-    nav.classList.add('sticky')
+    nav.classList.add('sticky');
   else
-  nav.classList.remove('sticky')
+  nav.classList.remove('sticky');
 }
 
-const headerObserver = new IntersectionObserver(obsCallback, obsOptions)
+const headerObserver = new IntersectionObserver(obsCallback, obsOptions);
 headerObserver.observe(header);
+
+// Reveal sections on scroll
+
+const revealSection = function(entries) {
+  const [entry] = entries;
+  if(!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+  sectionObserver.unobserve(entry.target)
+}
+
+const sectionObserver = new IntersectionObserver(revealSection, {root: null, threshold: 0.15});
+
+sections.forEach(function(section) {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+})
