@@ -184,8 +184,9 @@ const maxSlide = slides.length - 1;
 
 const goToSlide = function(slide){
   slides.forEach((s, i) => 
-  s.style.transform = `translateX(${100 * (i - slide)}%)`
+    s.style.transform = `translateX(${100 * (i - slide)}%)`
   )
+  console.log(slide, "from gotoSlide")
 }
 
 
@@ -220,9 +221,6 @@ btnLeft.addEventListener('click', prevSlide)
 
 // Slide dots
 
-
-
-
 const createDots = function() {
   slides.forEach(function(_, i) {
     dotsContainer.insertAdjacentHTML(
@@ -254,11 +252,8 @@ const init = function() {
 
 dotsContainer.addEventListener('click', function(e) {
   if(!e.target.classList.contains('dots__dot')) return;
-  console.log(e.target.dataset)
   const { slide } = e.target.dataset;
   activateDot(slide)
   goToSlide(slide)
+  currSlide = slide;
 })
-
-
-
